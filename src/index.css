@@ -2,7 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer components {
+/* @layer components {
   code {
     @apply font-mono text-sm bg-zinc-900 text-orange-400 p-1
   }
@@ -28,4 +28,4 @@
   .container {
     @apply mx-auto max-w-3xl ring-1 bg-zinc-900 ring-zinc-300/20 xl:max-w-5xl min-h-screen p-10
   }
-}
+} */
