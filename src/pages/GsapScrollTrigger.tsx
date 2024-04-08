@@ -7,11 +7,13 @@ gsap.registerPlugin(ScrollTrigger);
 
 const GsapScrollTrigger = () => {
   // TODO: Implement the gsap scroll trigger
-  const scrollRef = useRef();
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useGSAP(
     () => {
-      const boxes = gsap.utils.toArray(scrollRef.current.children);
+      const boxes: Element[] = gsap.utils.toArray(
+        scrollRef.current?.children || []
+      );
       boxes.forEach((box) => {
         gsap.to(box, {
           x: 150 * (boxes.indexOf(box) + 5),
