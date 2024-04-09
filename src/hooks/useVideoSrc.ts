@@ -1,18 +1,15 @@
 import { useEffect, useState } from "react";
-import { useWindowSize } from "usehooks-ts";
 import { heroVideo, smallHeroVideo } from "../utils";
 
 export const useVideoSrc = () => {
-  const { width } = useWindowSize();
-
   // Set initial video source based on window width
   const [videoSrc, setVideoSrc] = useState(
-    width < 760 ? smallHeroVideo : heroVideo
+    window.innerWidth < 540 ? smallHeroVideo : heroVideo
   );
 
   // Function to handle video source change on window resize
   const handleVideoSrcSet = () => {
-    if (width < 760) {
+    if (window.innerWidth < 540) {
       setVideoSrc(smallHeroVideo);
     } else {
       setVideoSrc(heroVideo);
