@@ -32,7 +32,7 @@ const Hero = () => {
             className="pointer-events-none"
             autoPlay
             muted
-            playsInline={true}
+            playsInline
             key={videoSrc}
           >
             {/* Source based on video source state */}
