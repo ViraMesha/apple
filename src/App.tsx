@@ -4,11 +4,13 @@ import Navbar from "./components/Navbar";
 
 const App = () => {
   return (
-    <main className="bg-black">
+    <>
       <Navbar />
-      <Hero />
-      <Highlights />
-    </main>
+      <main className="bg-black">
+        <Hero />
+        <Highlights />
+      </main>
+    </>
   );
 };
 
