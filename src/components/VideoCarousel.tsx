@@ -2,13 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { hightlightsSlides } from "../constants";
 import gsap from "gsap";
 import { pauseImg, playImg, replayImg } from "../utils";
-
-interface VideoCarouselProps {
-  id: string;
-  textLists: string[];
-  video: string;
-  videoDuration: number;
-}
+import { useGSAP } from "@gsap/react";
 
 type ProcessT = "video-reset" | "play" | "pause" | "video-end" | "video-last";
 
@@ -24,7 +18,9 @@ const VideoCarousel = () => {
     isLastVideo: false,
     isPlaying: false,
   });
-  const [loadedData, setLoadedData] = useState<VideoCarouselProps[]>([]);
+  const [loadedData, setLoadedData] = useState<
+    React.SyntheticEvent<HTMLVideoElement, Event>[]
+  >([]);
   const { isEnd, startPlay, videoId, isLastVideo, isPlaying } = video;
 
   useEffect(() => {
@@ -36,6 +32,13 @@ const VideoCarousel = () => {
       }
     }
   }, [startPlay, videoId, isPlaying, loadedData]);
+
+  const handleLoadedMetadata = (
+    index: number,
+    event: React.SyntheticEvent<HTMLVideoElement, Event>
+  ) => {
+    setLoadedData((pre) => [...pre, event]);
+  };
 
   useEffect(() => {
     const currentProgress = 0;
@@ -88,6 +91,22 @@ const VideoCarousel = () => {
     }
   };
 
+  useGSAP(() => {
+    gsap.to("#video", {
+      scrollTrigger: {
+        trigger: "#video",
+        toggleActions: "restart none none none",
+      },
+      onComplete: () => {
+        setVideo((prevVideo) => ({
+          ...prevVideo,
+          startPlay: true,
+          isPlaying: true,
+        }));
+      },
+    });
+  }, [isEnd, videoId]);
+
   return (
     <>
       {/* Iterate over each slide in the highlightsSlides array */}
@@ -114,6 +133,7 @@ const VideoCarousel = () => {
                         isPlaying: true,
                       }));
                     }}
+                    onLoadedMetadata={(e) => handleLoadedMetadata(index, e)}
                   >
                     <source src={video} type="video/mp4" />
                   </video>
