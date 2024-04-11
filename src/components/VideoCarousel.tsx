@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { hightlightsSlides } from "../constants";
 import gsap from "gsap";
+import { pauseImg, playImg, replayImg } from "../utils";
 
 interface VideoCarouselProps {
   id: string;
@@ -8,6 +9,8 @@ interface VideoCarouselProps {
   video: string;
   videoDuration: number;
 }
+
+type ProcessT = "video-reset" | "play" | "pause" | "video-end" | "video-last";
 
 const VideoCarousel = () => {
   const videoRef = useRef<HTMLVideoElement[]>([]);
@@ -46,6 +49,44 @@ const VideoCarousel = () => {
       });
     }
   }, [videoId, startPlay]);
+
+  const handleProcess = (type: ProcessT, index?: number) => {
+    switch (type) {
+      case "video-end":
+        setVideo((prevVideo) => ({
+          ...prevVideo,
+          isEnd: true,
+          videoId: index ? index + 1 : 0,
+        }));
+        break;
+
+      case "video-last":
+        setVideo((prevVideo) => ({
+          ...prevVideo,
+          isLastVideo: true,
+        }));
+        break;
+
+      case "video-reset":
+        setVideo((prevVideo) => ({
+          ...prevVideo,
+          isLastVideo: false,
+          videoId: 0,
+        }));
+        break;
+
+      case "play":
+        setVideo((prevVideo) => ({
+          ...prevVideo,
+          isPlaying: !prevVideo.isPlaying,
+          videoId: 0,
+        }));
+        break;
+
+      default:
+        return video;
+    }
+  };
 
   return (
     <>
@@ -110,6 +151,19 @@ const VideoCarousel = () => {
             </span>
           ))}
         </div>
+        <button className="control-btn">
+          <img
+            src={isLastVideo ? replayImg : !isPlaying ? playImg : pauseImg}
+            alt={isLastVideo ? "replay" : !isPlaying ? "play" : "pause"}
+            onClick={
+              isLastVideo
+                ? () => handleProcess("video-reset")
+                : !isPlaying
+                  ? () => handleProcess("play")
+                  : () => handleProcess("pause")
+            }
+          />
+        </button>
       </div>
     </>
   );
