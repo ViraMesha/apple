@@ -11,7 +11,7 @@ interface VideoCarouselProps {
 
 const VideoCarousel = () => {
   const videoRef = useRef<HTMLVideoElement[]>([]);
-  const videoSpanRef = useRef<HTMLDivElement[]>([]);
+  const videoSpanRef = useRef<HTMLSpanElement[]>([]);
   const videoDivRef = useRef<HTMLDivElement[]>([]);
 
   const [video, setVideo] = useState({
@@ -90,6 +90,26 @@ const VideoCarousel = () => {
             </div>
           );
         })}
+      </div>
+
+      {/* Progress tracking and pause btn */}
+      <div className="relative flex-center mt-10">
+        <div className="flex-center py-5 px-7 bg-gray-300 backdrop-blur rounded-full">
+          {videoRef.current.map((_, index) => (
+            <span
+              key={index}
+              ref={(el) => (videoDivRef.current[index] = el as HTMLDivElement)}
+              className="mx-2 w-3 h-3 bg-gray-200 rounded-full relative cursor-pointer"
+            >
+              <span
+                className="absolute h-full w-full rounded-full"
+                ref={(el) =>
+                  (videoSpanRef.current[index] = el as HTMLSpanElement)
+                }
+              ></span>
+            </span>
+          ))}
+        </div>
       </div>
     </>
   );
