@@ -4,17 +4,20 @@ import ModelView from "./ModelView";
 import { useRef, useState } from "react";
 import { yellowImg } from "../utils";
 import * as THREE from "three";
-import { TSize } from "../models/three-models/model";
+import { TModel, TSize } from "../models/three-models/model";
 import { Canvas } from "@react-three/fiber";
 import { View } from "@react-three/drei";
+import { models, sizes } from "../constants";
 
 const Model = () => {
   const [size, setSize] = useState<TSize>("small");
-  const [model, setModel] = useState({
+  const [model, setModel] = useState<TModel>({
     title: "iPhone 15 Pro in Natural Titanium",
     color: ["#8F8A81", "#FFE7B9", "#6F6C64"],
     img: yellowImg,
   });
+
+  const { title, color, img } = model;
 
   //camera control for the model view
   const cameraControlSm = useRef();
@@ -78,6 +81,39 @@ const Model = () => {
             >
               <View.Port />
             </Canvas>
+          </div>
+          <div className="mx-auto w-full">
+            <p className="text-sm font-light text-center mb-5">{title}</p>
+            <div className="flex-center">
+              <ul className="color-container">
+                {models.map((model, index) => {
+                  const { id, title, color, img } = model;
+                  return (
+                    <li
+                      key={index}
+                      className="w-6 h-6 rounded-full mx-2 cursor-pointer"
+                      style={{ backgroundColor: color[0] }}
+                      onClick={() => setModel(model)}
+                    />
+                  );
+                })}
+              </ul>
+              <button type="button" className="size-btn-container">
+                {sizes.map(({ label, value }) => (
+                  <span
+                    key={label}
+                    className="size-btn"
+                    style={{
+                      backgroundColor: size === value ? "white" : "transparent",
+                      color: size === value ? "black" : "white",
+                    }}
+                    onClick={() => setSize(value as TSize)}
+                  >
+                    {label}
+                  </span>
+                ))}
+              </button>
+            </div>
           </div>
         </div>
       </div>
