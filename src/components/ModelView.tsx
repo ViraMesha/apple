@@ -1,6 +1,11 @@
 import * as THREE from "three";
 import { TModel, TSize } from "../models/three-models/model";
-import { OrbitControls, PerspectiveCamera, View } from "@react-three/drei";
+import {
+  Html,
+  OrbitControls,
+  PerspectiveCamera,
+  View,
+} from "@react-three/drei";
 import Lights from "./Lights";
 import { Suspense } from "react";
 import IPhone from "./IPhone";
@@ -45,11 +50,17 @@ const ModelView = ({
       />
       <group
         ref={groupRef}
-        name={`${index === 1 ? "small" : "large"}`}
+        name={index === 1 ? "small" : "large"}
         position={[0, 0, 0]}
       >
         {/* Provide a loader until the model loads */}
-        <Suspense fallback={<div>Loading..</div>}>
+        <Suspense
+          fallback={
+            <Html>
+              <div>Loading..</div>
+            </Html>
+          }
+        >
           <IPhone
             scale={index === 1 ? [15, 15, 15] : [17, 17, 17]}
             item={item}
