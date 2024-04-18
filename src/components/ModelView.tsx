@@ -9,6 +9,7 @@ import {
 import Lights from "./Lights";
 import { Suspense } from "react";
 import IPhone from "./IPhone";
+import Loader from "./Loader";
 
 type Props = {
   index: number;
@@ -54,13 +55,7 @@ const ModelView = ({
         position={[0, 0, 0]}
       >
         {/* Provide a loader until the model loads */}
-        <Suspense
-          fallback={
-            <Html>
-              <div>Loading..</div>
-            </Html>
-          }
-        >
+        <Suspense fallback={<Loader />}>
           <IPhone
             scale={index === 1 ? [15, 15, 15] : [17, 17, 17]}
             item={item}
