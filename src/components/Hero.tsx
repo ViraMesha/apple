@@ -1,18 +1,18 @@
-import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { useVideoSrc } from "../hooks";
+import { animateWithGsap } from "../utils/animations";
 
 const Hero = () => {
   const videoSrc = useVideoSrc();
 
   // Use GSAP for animation when component mounts
   useGSAP(() => {
-    gsap.to("#hero", {
+    animateWithGsap("#hero", {
       opacity: 1,
       delay: 2,
     });
 
-    gsap.to("#cta", {
+    animateWithGsap("#cta", {
       opacity: 1,
       y: -50,
       delay: 2,

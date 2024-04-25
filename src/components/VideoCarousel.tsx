@@ -4,6 +4,7 @@ import gsap from "gsap";
 import { pauseImg, playImg, replayImg } from "../utils";
 import { useGSAP } from "@gsap/react";
 import { ScrollTrigger } from "gsap/all";
+import { animateWithGsap } from "../utils/animations";
 gsap.registerPlugin(ScrollTrigger);
 
 type ProcessT = "video-reset" | "play" | "pause" | "video-end" | "video-last";
@@ -28,7 +29,7 @@ const VideoCarousel = () => {
   const { isEnd, startPlay, videoId, isLastVideo, isPlaying } = video;
 
   useGSAP(() => {
-    gsap.to("#slider", {
+    animateWithGsap("#slider", {
       transform: `translateX(${-100 * videoId}%)`,
       duration: 2,
       ease: "power2.inOut",

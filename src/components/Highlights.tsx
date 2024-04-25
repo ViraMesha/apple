@@ -1,19 +1,19 @@
 import { useGSAP } from "@gsap/react";
-import gsap from "gsap";
 import { rightImg, watchImg } from "../utils";
 import VideoCarousel from "./VideoCarousel";
+import { animateWithGsap } from "../utils/animations";
 
 const Highlights = () => {
   // Use GSAP for animations when component mounts
   useGSAP(() => {
     // Animation for title
-    gsap.to("#title", {
+    animateWithGsap("#title", {
       opacity: 1,
       y: 0,
     });
 
     // Animation for links
-    gsap.to(".link", {
+    animateWithGsap(".link", {
       opacity: 1,
       y: 0,
       duration: 1,
